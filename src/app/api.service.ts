@@ -9,7 +9,7 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
-const apiUrl = '/api/v1/customers';
+const apiUrl = 'https://my-json-server.typicode.com/typicode/demo/posts';
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +29,12 @@ export class ApiService {
     };
   }
 
-  getCustomers(): Observable<Array<Customer>> {
-    return this.http.get<Array<Customer>>(apiUrl)
+  getCustomers(): Observable<any> {
+    return this.http.get<Array<{}>>(apiUrl)
       .pipe(
-        tap(product => console.log('fetched products')),
+        tap(customers => {
+          return customers;
+        }),
         catchError(this.handleError('getProducts', []))
       );
   }
