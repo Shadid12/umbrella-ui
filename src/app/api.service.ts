@@ -38,4 +38,28 @@ export class ApiService {
         catchError(this.handleError('getProducts', []))
       );
   }
+
+  getCustomer(id: number): Observable<any> {
+    const url = `${apiUrl}/${id}`;
+    return this.http.get<any>(url).pipe(
+      tap(customer => (customer)),
+      catchError(this.handleError<any>(`getProduct id=${id}`))
+    );
+  }
+
+  deleteProduct(id: any): Observable<any> {
+    const url = `${apiUrl}/${id}`;
+    return this.http.delete<any>(url, httpOptions).pipe(
+      tap(res => (res)),
+      catchError(this.handleError<any>('deleteProduct'))
+    );
+  }
+
+  updateProduct(id: any, customer: any): Observable<any> {
+    const url = `${apiUrl}/${id}`;
+    return this.http.put(url, customer, httpOptions).pipe(
+      tap(res => (res)),
+      catchError(this.handleError<any>('updateProduct'))
+    );
+  }
 }
