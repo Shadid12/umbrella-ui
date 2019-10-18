@@ -62,4 +62,11 @@ export class ApiService {
       catchError(this.handleError<any>('updateProduct'))
     );
   }
+
+  addProduct(customer: Customer): Observable<any> {
+    return this.http.post<any>(apiUrl, customer, httpOptions).pipe(
+      tap((res: Customer) => (res)),
+      catchError(this.handleError<Customer>('error add'))
+    );
+  }
 }
