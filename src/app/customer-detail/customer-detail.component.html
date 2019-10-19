@@ -9,7 +9,7 @@
     <div class="button-row">
         <a mat-flat-button color="primary" [routerLink]="['/customers']"><mat-icon>list</mat-icon></a>
     </div>
-    <mat-card class="example-card">
+    <mat-card class="example-card"  *ngIf="!isLoadingResults">
         <mat-card-header>
             <mat-card-title><h2>{{customer.title}}</h2></mat-card-title>
             <mat-card-subtitle>{{customer.desc}}</mat-card-subtitle>
@@ -20,7 +20,7 @@
                 <dd>{{customer.employee}}</dd>
             </dl>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions >
             <a mat-flat-button color="primary" [routerLink]="['/customer-edit', customer.id]"><mat-icon>edit</mat-icon></a>
             <a mat-flat-button color="warn" (click)="deleteProduct(customer.id)"><mat-icon>delete</mat-icon></a>
         </mat-card-actions>

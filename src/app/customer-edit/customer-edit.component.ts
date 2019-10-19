@@ -48,10 +48,9 @@ export class CustomerEditComponent implements OnInit {
   getProduct(id: any) {
     this.api.getCustomer(id).subscribe((data: any) => {
       this.id = data.id;
-      debugger
       this.editForm.setValue({
         title: data.title,
-        desc: data.desc,
+        desc: data.desc ? data.desc : null,
         id: data.id
       });
     });
@@ -61,7 +60,7 @@ export class CustomerEditComponent implements OnInit {
     this.isLoadingResults = true;
     this.api.updateProduct(this.id, this.editForm.value)
       .subscribe((res: any) => {
-          const id = res._id;
+          const id = res.id;
           this.isLoadingResults = false;
           this.router.navigate(['/customer-details', id]);
         }, (err: any) => {
