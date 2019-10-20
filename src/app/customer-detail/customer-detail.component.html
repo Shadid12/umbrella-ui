@@ -1,4 +1,4 @@
-<p>customer-detail works!</p>
+<h4>Customer Details</h4>
 
 
 <div class="example-container mat-elevation-z8">
@@ -11,18 +11,15 @@
     </div>
     <mat-card class="example-card"  *ngIf="!isLoadingResults">
         <mat-card-header>
-            <mat-card-title><h2>{{customer.title}}</h2></mat-card-title>
-            <mat-card-subtitle>{{customer.desc}}</mat-card-subtitle>
+            <mat-card-title><h2>{{customer.name}}</h2></mat-card-title>
+            <mat-card-subtitle>Location: <b>{{customer.location}}</b></mat-card-subtitle>
+            <mat-card-subtitle>Contact: <b>{{customer.personOfContact}}</b></mat-card-subtitle>
+            <mat-card-subtitle>NUmber of Employees: <b>{{customer.employees}}</b></mat-card-subtitle>
+            <mat-card-subtitle>Telephone: <b>{{customer.telephone}}</b></mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-            <dl>
-                <dt>Employee #:</dt>
-                <dd>{{customer.employee}}</dd>
-            </dl>
-        </mat-card-content>
         <mat-card-actions >
-            <a mat-flat-button color="primary" [routerLink]="['/customer-edit', customer.id]"><mat-icon>edit</mat-icon></a>
-            <a mat-flat-button color="warn" (click)="deleteProduct(customer.id)"><mat-icon>delete</mat-icon></a>
+            <a mat-flat-button color="primary" [routerLink]="['/customer-edit', customer._id]"><mat-icon>edit</mat-icon></a>
+            <a mat-flat-button color="warn" (click)="deleteProduct(customer._id)"><mat-icon>delete</mat-icon></a>
         </mat-card-actions>
     </mat-card>
 </div>

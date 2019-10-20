@@ -10,19 +10,50 @@
     </div>
     <mat-card class="example-card">
         <form [formGroup]="editForm" (ngSubmit)="onFormSubmit()">
+            <!-- name  -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Customer Title" formControlName="title"
+                <input matInput placeholder="Customer Name" formControlName="name"
                         [errorStateMatcher]="matcher">
                 <mat-error>
-                <span *ngIf="!editForm.get('title').valid && editForm.get('title').touched">Please enter Customer Title</span>
+                <span *ngIf="!editForm.get('name').valid && editForm.get('name').touched">Please enter a name</span>
                 </mat-error>
             </mat-form-field>
-
+    
+            <!-- location  -->
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Product Desc" formControlName="desc"
+                <input matInput placeholder="Location" formControlName="location"
                         [errorStateMatcher]="matcher">
                 <mat-error>
-                <span *ngIf="!editForm.get('desc').valid && editForm.get('desc').touched">Please enter Description</span>
+                <span *ngIf="!editForm.get('location').valid && editForm.get('location').touched">Must Enter a Location</span>
+                </mat-error>
+            </mat-form-field>
+    
+            <!-- employees  -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Number of Employees" formControlName="employees"
+                    type="number"
+                    [errorStateMatcher]="matcher">
+                <mat-error>
+                <span *ngIf="!editForm.get('employees').valid && editForm.get('employees').touched">Must Enter a Location</span>
+                </mat-error>
+            </mat-form-field>
+    
+            <!-- personOfContact  -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Person Of Contact" formControlName="personOfContact"
+                        [errorStateMatcher]="matcher">
+                <mat-error>
+                <span *ngIf="!editForm.get('personOfContact').valid && editForm.get('personOfContact').touched">Must Enter a Person</span>
+                </mat-error>
+            </mat-form-field>
+    
+            <!-- telephone  -->
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Telephone" formControlName="telephone"
+                    type="number"
+                    [errorStateMatcher]="matcher">
+                <mat-error>
+                <span *ngIf="!editForm.get('telephone').valid && editForm.get('telephone').touched">Must Enter a Location</span>
                 </mat-error>
             </mat-form-field>
         

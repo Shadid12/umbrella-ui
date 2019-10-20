@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material';
+import { Customer } from '../models/customer';
 
 
 
@@ -22,10 +23,13 @@ export class CustomerEditComponent implements OnInit {
 
   editForm: FormGroup;
   id = '';
-  title = null;
-  desc = '';
   isLoadingResults = false;
   matcher = null;
+  employees = 0;
+  location = '';
+  name = '';
+  personOfContact = '';
+  telephone = 0;
 
   constructor(
     private router: Router,
@@ -39,30 +43,36 @@ export class CustomerEditComponent implements OnInit {
   ngOnInit() {
     this.getProduct(this.route.snapshot.params.id);
     this.editForm = this.formBuilder.group({
-      title : [null, Validators.required],
-      desc : [null, Validators.required],
-      id: [null, Validators.required]
+      name : [null, Validators.required],
+      personOfContact : [null, Validators.required],
+      employees : [0, Validators.required],
+      location : [null, Validators.required],
+      telephone : [0, Validators.required]
     });
   }
 
   getProduct(id: any) {
+    this.isLoadingResults = true;
     this.api.getCustomer(id).subscribe((data: any) => {
-      this.id = data.id;
+      this.id = data._id;
       this.editForm.setValue({
-        title: data.title,
-        desc: data.desc ? data.desc : null,
-        id: data.id
+        name: data.name,
+        personOfContact: data.personOfContact,
+        employees: data.employees,
+        location: data.location,
+        telephone: data.telephone
       });
+      this.isLoadingResults = false;
     });
   }
 
   onFormSubmit() {
     this.isLoadingResults = true;
     this.api.updateProduct(this.id, this.editForm.value)
-      .subscribe((res: any) => {
-          const id = res.id;
+      .subscribe((customer: Customer) => {
+          console.log('updated', customer)
           this.isLoadingResults = false;
-          this.router.navigate(['/customer-details', id]);
+          this.router.navigate(['/customer-details', this.id]);
         }, (err: any) => {
           console.log(err);
           this.isLoadingResults = false;

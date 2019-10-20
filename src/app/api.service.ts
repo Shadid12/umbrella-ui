@@ -56,9 +56,9 @@ export class ApiService {
     );
   }
 
-  updateProduct(id: any, customer: any): Observable<any> {
+  updateProduct(id: string, customer: Customer): Observable<any> {
     const url = `${apiUrl}/${id}`;
-    return this.http.put(url, customer, httpOptions).pipe(
+    return this.http.patch(url, customer, httpOptions).pipe(
       tap(res => (res)),
       catchError(this.handleError<any>('updateProduct'))
     );
