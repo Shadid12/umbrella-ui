@@ -23,10 +23,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class CustomerAddComponent implements OnInit {
 
   cutomerForm: FormGroup;
-  title = '';
-  desc = '';
   isLoadingResults = false;
   matcher  = null;
+  employees = 0;
+  location = '';
+  name = '';
+  personOfContact = '';
+  telephone = 0;
 
   constructor(
     private router: Router,
@@ -40,14 +43,17 @@ export class CustomerAddComponent implements OnInit {
 
   ngOnInit() {
     this.cutomerForm = this.formBuilder.group({
-      title : [null, Validators.required],
-      desc : [null, Validators.required]
+      name : [null, Validators.required],
+      personOfContact : [null, Validators.required],
+      employees : [0, Validators.required],
+      location : [null, Validators.required],
+      telephone : [0, Validators.required]
     });
   }
 
   onFormSubmit() {
     this.isLoadingResults = true;
-    this.api.addProduct(this.cutomerForm.value)
+    this.api.addCustomer(this.cutomerForm.value)
       .subscribe((res: any) => {
           const id = res._id;
           this.isLoadingResults = false;

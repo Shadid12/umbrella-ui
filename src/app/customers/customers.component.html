@@ -38,6 +38,12 @@
                 <td mat-cell *matCellDef="let row">{{row.personOfContact}}</td>
             </ng-container>
 
+            <!-- Customer Phone Column -->
+            <ng-container matColumnDef="telephone">
+                <th mat-header-cell *matHeaderCellDef>Telephone</th>
+                <td mat-cell *matCellDef="let row">{{row.telephone}}</td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/customer-details/', row.id]"></tr>
         </table>

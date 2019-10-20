@@ -9,7 +9,7 @@ import { Customer } from '../models/customer';
 })
 export class CustomersComponent implements OnInit {
 
-  displayedColumns: Array<string> = ['name', 'employess', 'location', 'personOfContact'];
+  displayedColumns: Array<string> = ['name', 'employess', 'location', 'personOfContact', 'telephone'];
   data: Array<any> = [];
   isLoadingResults = true;
 
