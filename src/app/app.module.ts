@@ -20,6 +20,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
+import { BargraphComponent } from './bargraph/bargraph.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {
     CustomersComponent,
     CustomerDetailComponent,
     CustomerAddComponent,
-    CustomerEditComponent
+    CustomerEditComponent,
+    BargraphComponent
   ],
   imports: [
     BrowserModule,

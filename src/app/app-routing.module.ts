@@ -4,9 +4,14 @@ import { CustomersComponent } from './customers/customers.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerAddComponent } from './customer-add/customer-add.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
+import { BargraphComponent } from './bargraph/bargraph.component';
 
 
 const routes: Routes = [
+  { path: 'barchart',
+  component: BargraphComponent,
+    pathMatch: 'full'
+  },
   {
     path: 'customers',
     component: CustomersComponent,
@@ -30,7 +35,7 @@ const routes: Routes = [
   { path: '',
     redirectTo: '/customers',
     pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({
