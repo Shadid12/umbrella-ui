@@ -1,5 +1,8 @@
 <h4>Showing Top Customer Forcast</h4>
 
+<div class="button-row">
+    <a mat-flat-button color="primary" [routerLink]="['/customers']"><mat-icon>list</mat-icon></a>
+</div>
 
 <div style="display: block;" *ngIf="graphLoaded">
     <canvas baseChart 
