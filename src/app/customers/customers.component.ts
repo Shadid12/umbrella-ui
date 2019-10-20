@@ -9,13 +9,12 @@ import { Customer } from '../models/customer';
 })
 export class CustomersComponent implements OnInit {
 
-  displayedColumns: Array<string> = ['id', 'title'];
+  displayedColumns: Array<string> = ['name', 'employess', 'location', 'personOfContact'];
   data: Array<any> = [];
   isLoadingResults = true;
 
 
   constructor(private api: ApiService) {
-
   }
 
   ngOnInit() {

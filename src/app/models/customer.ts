@@ -1,4 +1,9 @@
 export class Customer {
-    id: string;
-    employees: Array<{}>;
+    employees: Number;
+    location: String;
+    name: String;
+    personOfContact: String;
+    telephone: Number;
+    __v: Number;
+    _id: String;
 }
