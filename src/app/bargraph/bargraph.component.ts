@@ -3,8 +3,9 @@ import { Customer } from '../models/customer';
 import { ApiService } from '../api.service';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import * as moment from 'moment';
+import { forkJoin, Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-bargraph',
@@ -20,21 +21,19 @@ export class BargraphComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
   };
-  public barChartLabels: Label[] = [];
+  public barChartLabels: Label[] = ['','','',''];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [];
+  public graphLoaded = true;
+  private thirdSubscription: Subscription;
+  private weatherDataSubs: Subscription;
 
   public barChartData: ChartDataSets[] = [
     { 
-      data: [], 
+      data: [null, null , null, null], 
       label: 'Customer Employees',
-      backgroundColor: [
-        'red',
-        'green',
-        'pink',
-        'cyan',
-      ] 
+      backgroundColor: [null, null , null, null]
     }
   ];
 
@@ -48,30 +47,63 @@ export class BargraphComponent implements OnInit {
     // Get 5 days from now and store them
     this.setUpDays();
     this.api.getTopCustomers()
-      .pipe(
-        tap(
-          (customerData) => {
-            console.log('first observable', customerData);
-              customerData.forEach((value, index) => {
-                this.getWeatherData(index, value)
-              })
-          },
-          (erro) => console.log('something went wrong')
-        )
-      )
-      .subscribe((res: Array<Customer>) => {
+      .subscribe((res: any) => {
         this.data = res;
-        // set the label of the graph
-        res.forEach((item: any) => {
-          this.barChartLabels.push(item.name)
-          this.barChartData[0].data.push(item.employees)
-        })
-        console.log('data', this.data);
-      },
-      err => {
-        console.log(err); // TODO: handle error
-      });
+        console.log('Done', this.data);
+        this.thirdSubscription = this.simpleObservable.subscribe();
+      })
   }
+
+  ngOnDestroy() {
+    this.thirdSubscription.unsubscribe();
+  }
+  public simpleObservable = new Observable((observer) => {
+    
+    // observable execution
+    if(this.data.length > 0) {
+      console.log('Data Found')
+      let observableBatch = [];
+      this.data.forEach((item: any, index:any) => {
+        this.api.callOpenWeather(item.location).subscribe((res: any) => {
+          console.log('--->>>', res)
+          this.barChartLabels[index] = item.name
+          this.barChartData[0].data[index] = item.employees
+
+          // Loop the days array
+          const weather = res.list
+          let weatherByDay = []
+          let rainScore = 0;
+          this.daysArray.forEach((day: string) => {
+            // Get all weather data for this day
+            weatherByDay = weather.filter((item) => {
+              if(day === item.dt_txt.split(' ')[0]) {
+                return item;
+              }
+            })
+            console.log('weather By Day', weatherByDay)
+            // check if its going to rain today
+            let rainCount = weatherByDay.filter((dayy) => {
+            if(dayy.rain) {
+              return dayy;
+            } 
+            })
+            if(rainCount.length > 0) {
+              rainScore++;
+            }
+          })
+
+        console.log('check rain score', rainScore)
+        if(rainScore >= 5) {
+          this.barChartData[0].backgroundColor[index] = 'green';
+        } else {
+          this.barChartData[0].backgroundColor[index] = 'red';
+        }
+        })
+      })
+      observer.next("bla bla bla")
+      observer.complete()
+    }
+  })
 
   private setUpDays() {
     let today = moment(new Date()).format("YYYY-MM-DD");
@@ -83,46 +115,6 @@ export class BargraphComponent implements OnInit {
       today = tomorrow;
     }
     this.daysArray = daysArray;
-  }
-
-  getWeatherData(index: Number, data: Customer) {
-    this.isLoadingResults = true;
-    this.api.callOpenWeather(data.location)
-      .subscribe((res: any) => {
-        // console.log('index', index)
-        // console.log('weather', res)
-        
-        // Loop the days array
-        const weather = res.list
-        let weatherByDay = []
-        let rainScore = 0;
-        this.daysArray.forEach((day: string) => {
-          // Get all weather data for this day
-          weatherByDay = weather.filter((item) => {
-            if(day === item.dt_txt.split(' ')[0]) {
-              return item;
-            }
-          })
-          console.log('weather By Day', weatherByDay)
-          // check if its going to rain today
-          let rainCount = weatherByDay.filter((dayy) => {
-           if(dayy.rain) {
-             return dayy;
-           } 
-          })
-          if(rainCount.length > 0) {
-            rainScore++;
-          }
-        })
-
-        console.log('check rain score', rainScore)
-        // set the label of the graph
-        // Color the graph based on rain score and 
-
-      },
-      err => {
-        console.log(err); // TODO: handle error
-      });
   }
 
 }

@@ -1,7 +1,7 @@
 <h4>Showing Top Customer Forcast</h4>
 
 
-<div style="display: block;">
+<div style="display: block;" *ngIf="graphLoaded">
     <canvas baseChart 
         [datasets]="barChartData"
         [labels]="barChartLabels"
