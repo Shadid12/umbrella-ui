@@ -21,6 +21,7 @@ import {
   MatCardModule,
   MatFormFieldModule } from '@angular/material';
 import { BargraphComponent } from './bargraph/bargraph.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { BargraphComponent } from './bargraph/bargraph.component';
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

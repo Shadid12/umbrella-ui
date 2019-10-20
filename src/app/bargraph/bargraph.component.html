@@ -1,1 +1,12 @@
-<p>bargraph works!</p>
+<h4>Showing Top Customer Forcast</h4>
+
+
+<div style="display: block;">
+    <canvas baseChart 
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [chartType]="barChartType">
+    </canvas>
+</div>

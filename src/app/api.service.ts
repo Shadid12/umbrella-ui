@@ -9,8 +9,9 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
-// const apiUrl = 'https://my-json-server.typicode.com/typicode/demo/posts';
 const apiUrl = 'http://localhost:3000/customers';
+const weatherApiKey = 'c9be1852c835456fe7ba35cefb0d6c24' // TODO Put it in env file
+const weatherApiUrl = 'https://api.openweathermap.org/data/2.5/forecast?' // TODO versioning
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,14 @@ export class ApiService {
   addCustomer(customer: Customer): Observable<any> {
     return this.http.post<any>(apiUrl, customer, httpOptions).pipe(
       tap((res: Customer) => (res)),
+      catchError(this.handleError<Customer>('error add'))
+    );
+  }
+
+  callOpenWeather(location: any) {
+    let url = `${weatherApiUrl}q=${location}&appid=${weatherApiKey}`
+    return this.http.get(url).pipe(
+      tap((res: any) => (res)),
       catchError(this.handleError<Customer>('error add'))
     );
   }
