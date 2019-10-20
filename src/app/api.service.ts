@@ -40,6 +40,17 @@ export class ApiService {
       );
   }
 
+  getTopCustomers(): Observable<any> {
+    const url = `${apiUrl}/limit`;
+    return this.http.get<Array<Customer>>(url)
+      .pipe(
+        tap(customers => {
+          return customers;
+        }),
+        catchError(this.handleError('getProducts', []))
+      );
+  }
+
   getCustomer(id: number): Observable<any> {
     const url = `${apiUrl}/${id}`;
     return this.http.get<any>(url).pipe(

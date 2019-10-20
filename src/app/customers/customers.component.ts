@@ -27,7 +27,7 @@ export class CustomersComponent implements OnInit {
       err => {
         console.log(err); // TODO: handle error
         this.isLoadingResults = false;
-    });
+      });
   }
 
 }
